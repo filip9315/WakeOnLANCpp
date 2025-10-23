@@ -1,7 +1,6 @@
 #include <iostream>
 #include "db_controller.h"
 #include <curl/curl.h>
-
 #include "address_list.h"
 
 
@@ -33,21 +32,27 @@ void wake(string url, vector<string> addresses) {
     send_req(url, addresses[pc_num-1]);
 }
 
-int main() {
+int main(int argc, char *argv[]) {
     db_controller controller;
     address_list address_list;
     int option;
     int pc_num;
     string address;
-    string url = controller.get_url() + "/wake";
+    const string url = controller.get_url() + "/wake";
     vector<string> addresses;
+
+    if (argc == 2) {
+        address = argv[1];
+        send_req(url, address);
+        return 0;
+    }
 
     cout << "Welcome to Wake on LAN (C++)!" << endl;
     cout << "What do you want to do?" << endl;
-    cout << "1. Wake a PC" << endl;
-    cout << "2. Add a PC to the list" << endl;
-    cout << "3. Remove a PC from the list" << endl;
-    cout << "4. Exit" << endl;
+    cout << "   1. Wake a PC" << endl;
+    cout << "   2. Add a PC to the list" << endl;
+    cout << "   3. Remove a PC from the list" << endl;
+    cout << "   4. Exit" << endl;
     cin >> option;
 
     while (option != 4) {
@@ -78,10 +83,10 @@ int main() {
                 break;
         }
         cout << endl << endl << "What do you want to do next?" << endl;
-        cout << "1. Wake a PC" << endl;
-        cout << "2. Add a PC to the list" << endl;
-        cout << "3. Remove a PC from the list" << endl;
-        cout << "4. Exit" << endl;
+        cout << "   1. Wake a PC" << endl;
+        cout << "   2. Add a PC to the list" << endl;
+        cout << "   3. Remove a PC from the list" << endl;
+        cout << "   4. Exit" << endl;
         cin >> option;
     }
 
